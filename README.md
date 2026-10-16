@@ -29,6 +29,8 @@ node --test service/scouting.test.mjs
 
 On Linux/macOS, use `./gradlew`. The development launcher requires the usual RuneLite/Jagex account setup. Never put account credentials into this repository.
 
+For the Cloudflare adapter, run `npm ci`, `npm test`, and `npm run check:worker` in `service/`. `npm run dev:worker` starts the local Workers runtime; `npm run deploy:worker` publishes to your signed-in Cloudflare account. See the hosting guide before deployment.
+
 ## Configuration
 
 Open the Wintertodt Scouter sidebar. With no service configured, only observations of the world you are visiting are available. Other worlds display **Unknown**.

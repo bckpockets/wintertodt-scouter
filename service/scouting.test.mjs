@@ -36,6 +36,12 @@ test('reports expire and replay never renews their timestamp', () => {
   assert.equal(service.clients.size, 0);
 });
 
+test('small clock skew cannot renew a replayed report', () => {
+  const service = new Scouting({ clock: () => 100 });
+  assert.equal(service.report('one', sample({ observedAt: 105 })), 204);
+  assert.equal(service.report('one', sample({ observedAt: 105 })), 409);
+});
+
 test('a reporter hopping worlds cannot populate two worlds', () => {
   let now = 100;
   const service = new Scouting({ clock: () => now });

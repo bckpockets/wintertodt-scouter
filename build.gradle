@@ -26,3 +26,12 @@ tasks.register('run', JavaExec) {
     jvmArgs '-ea'
     args '--developer-mode', '--debug'
 }
+
+// Argument file for a detached desktop launch; contains classpath only, never account credentials.
+tasks.register('writeRunArgs') {
+    dependsOn testClasses
+    doLast {
+        def classpath = sourceSets.test.runtimeClasspath.asPath.replace('\\', '/')
+        file("${buildDir}/runelite.args").text = "-ea\n-cp\n\"${classpath}\"\ncom.wintertodt.scouter.WintertodtScouterPluginTest\n--developer-mode\n"
+    }
+}

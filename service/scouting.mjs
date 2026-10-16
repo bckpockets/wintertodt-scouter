@@ -57,10 +57,10 @@ export class Scouting {
     if (!validate(input, now)) return 400;
     this.prune();
     const previous = this.clients.get(key);
-    if (previous && input.observedAt <= previous.observedAt) return 409;
+    if (previous && input.observedAt <= previous.sourceObservedAt) return 409;
     if (!previous && this.clients.size >= MAX_CLIENTS) return 503;
     // A client has at most one current world. Never refresh an observation on replay.
-    this.clients.set(key, { ...input, observedAt: Math.min(input.observedAt, now) });
+    this.clients.set(key, { ...input, sourceObservedAt: input.observedAt, observedAt: Math.min(input.observedAt, now) });
     return 204;
   }
 

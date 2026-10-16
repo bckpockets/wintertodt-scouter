@@ -31,5 +31,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - run: node --test service/scouting.test.mjs
+      - run: npm ci
+        working-directory: service
+      - run: npm test
+        working-directory: service
+      - run: npm run check:worker
+        working-directory: service
       - run: docker build -t wintertodt-scouter:test service
+      - run: SCOUTER_DOMAIN=scouter.example.org docker compose -f service/compose.yaml config --quiet
+      - run: docker run --rm -e SCOUTER_DOMAIN=scouter.example.org -v "$PWD/service/Caddyfile:/etc/caddy/Caddyfile:ro" caddy:2-alpine caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile

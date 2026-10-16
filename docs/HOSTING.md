@@ -1,14 +1,36 @@
 # Hosting proposal and runbook
 
-## Recommendation
+## Free Cloudflare deployment
 
-Start with one small fixed-price Linux VPS, the included Node 24 service and Caddy automatic HTTPS. The service uses bounded ephemeral memory and has no database or npm runtime dependencies. A restart loses only short-lived scouting reports. This is operationally simple, but a single VPS is not high availability; routine OS/container updates and monitoring are still required.
+The initial deployment targets Cloudflare Workers Free with one SQLite-class Durable Object and a free `workers.dev` HTTPS address. The adapter is `service/worker.mjs`; configuration is `service/wrangler.jsonc`. All edge locations route to one object. Reports remain in memory; only cleanup alarms use object storage. An eviction or deployment clears reports until scouts report again.
+
+In `service/`, run:
+
+```sh
+npm ci
+npm test
+npm run check:worker
+npx wrangler login
+npm run deploy:worker
+```
+
+Use the Free plan and verify the account remains on it before deploying. No domain purchase is needed. Test the printed HTTPS address at `/healthz` and `/v2/worlds`, then configure its base URL in the plugin. Sharing stays opt-in. Login pages and browser challenges must not intercept the API routes.
+
+The public Worker uses Cloudflare's `CF-Connecting-IP`, overwrites the internal source header, and ignores user-supplied proxy headers. A private Durable Object binding carries the request. Application logging is disabled in the supplied configuration; Cloudflare still processes connection metadata. Alarms prune expired reports/rate buckets roughly every ten seconds while state exists, subject to platform scheduling delays.
+
+Free quotas apply to Worker and Durable Object requests, duration and alarms. At five-second intervals, one continuously active reader makes 17,280 GETs/day, plus uploads when sharing. This fits an initial trial rather than unlimited public traffic. Quota exhaustion activates the client's remote-data fallback and backoff. This configuration does not select a paid plan.
+
+`npm run dev:worker` starts the local Workers/Durable Objects emulator. Dry-run bundling and handler tests do not establish public deployment or uptime. Verify the actual binding locally and the public endpoint before release.
+
+## Optional VPS deployment
+
+Operators who later prefer a VPS can use the included Node 24 service and Caddy automatic HTTPS. The service uses bounded ephemeral memory and has no database or npm runtime dependencies. A restart loses only short-lived scouting reports. A single VPS is not high availability; routine OS/container updates and monitoring are still required.
 
 Budget target: approximately US$5–10/month plus an optional domain. Confirm the provider's live regional price, taxes, IPv4 charge and availability before purchase. Nothing has been purchased or deployed by this repository.
 
 The [Hetzner June 2026 price table](https://docs.hetzner.com/general/infrastructure-and-availability/price-adjustment/) lists EU CX23 at €3.99/month excluding VAT and separately bills IPv4; availability varies. Prefer a region near the initial scouting population. An existing server with adequate isolation is also suitable.
 
-[Cloudflare Workers](https://developers.cloudflare.com/workers/platform/pricing/) is another option, but frequent polling needs a budget calculation and a stateful service adaptation. At a five-second interval, a single continuously active reader makes 17,280 GETs/day; an active sharing reader can double that. The 100,000 requests/day free allowance is therefore not a reliable public-plugin operating budget. Workers Paid starts at $5/month and is usage-based; storage/stateful compute may add charges. This implementation targets a VPS, not Workers.
+See [Cloudflare Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/) and [Durable Objects pricing](https://developers.cloudflare.com/durable-objects/platform/pricing/) for free-plan allowances. The repository supports both adapters; no paid hosting is required for the initial Cloudflare trial.
 
 ## Provisioning (requires an approved account and budget)
 

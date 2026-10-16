@@ -25,7 +25,7 @@
 
 The [current manifest](https://github.com/runelite/plugin-hub/blob/master/plugins/wintertodt-scouter) points to Nouser. This is an ownership/repository change requiring RuneLite maintainer review, not an automatic replacement.
 
-Once hosting and live QA pass, update that single manifest in a fork of `runelite/plugin-hub`:
+A draft PR may prepare the ownership transition, provided it explicitly lists hosting and live QA as incomplete and is not presented as release-ready. Once those gates pass, update the pinned commit and request review. Change only the existing manifest in a fork of `runelite/plugin-hub`:
 
 ```properties
 repository=https://github.com/bckpockets/wintertodt-scouter.git
