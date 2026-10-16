@@ -25,6 +25,10 @@ User-confirmed on 2026-10-16 in the development client: manual world hopping, lo
 
 ## Plugin Hub submission
 
+Submission status, 2026-10-16: [PR #18702](https://github.com/runelite/plugin-hub/pull/18702) was submitted and closed by a reviewer pending the [Plugin takeover policy](https://github.com/runelite/runelite/wiki/Plugin-takeover-policy). The reviewer requires a collaborator-access request to have been open for two weeks before reopening. No collaborator request has been posted yet. A proposed request is in [COLLABORATOR_REQUEST.md](COLLABORATOR_REQUEST.md). Do not reopen or create a replacement PR to bypass that condition. If the author grants access, coordinate changes in the existing repository and obtain the requested author acknowledgement.
+
+The initial Hub build also rejected construction of fresh Gson instances. Commit `9ad5a87f0f136765fd80b79bb6759815be624bbb` switches networking to RuneLite's injected Gson and passes all 19 Java tests. The prepared submission branch points to that commit; Hub validation will need to rerun when review resumes.
+
 The [current manifest](https://github.com/runelite/plugin-hub/blob/master/plugins/wintertodt-scouter) points to Nouser. This is an ownership/repository change requiring RuneLite maintainer review, not an automatic replacement.
 
 A draft PR may prepare the ownership transition, provided it explicitly lists hosting and live QA as incomplete and is not presented as release-ready. Once those gates pass, update the pinned commit and request review. Change only the existing manifest in a fork of `runelite/plugin-hub`:
