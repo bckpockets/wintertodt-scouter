@@ -35,3 +35,26 @@ tasks.register('writeRunArgs') {
         file("${buildDir}/runelite.args").text = "-ea\n-cp\n\"${classpath}\"\ncom.wintertodt.scouter.WintertodtScouterPluginTest\n--developer-mode\n"
     }
 }
+
+// Standalone development client for human testing, separate from the Plugin Hub plugin JAR.
+tasks.register('testClientJar', Jar) {
+    dependsOn testClasses
+    archiveFileName.set('wintertodt-scouter-test-client.jar')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest { attributes('Main-Class': 'com.wintertodt.scouter.WintertodtScouterPluginTest', 'Multi-Release': true) }
+    from sourceSets.main.output
+    from(sourceSets.test.output) { include 'com/wintertodt/scouter/WintertodtScouterPluginTest.class' }
+    from { configurations.testRuntimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    exclude 'META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', '**/module-info.class'
+}
+
+tasks.register('testClientZip', Zip) {
+    dependsOn testClientJar
+    archiveFileName.set('wintertodt-scouter-test-client.zip')
+    destinationDirectory.set(layout.buildDirectory.dir('distributions'))
+    from(tasks.named('testClientJar'))
+    from('testing/START.cmd')
+    from('testing/TESTING.md')
+    from('LICENSE')
+    from('NOTICE')
+}

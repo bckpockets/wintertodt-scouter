@@ -31,6 +31,8 @@ On Linux/macOS, use `./gradlew`. The development launcher requires the usual Run
 
 For the Cloudflare adapter, run `npm ci`, `npm test`, and `npm run check:worker` in `service/`. `npm run dev:worker` starts the local Workers runtime; `npm run deploy:worker` publishes to your signed-in Cloudflare account. See the hosting guide before deployment.
 
+To package a standalone client for another tester, run `./gradlew testClientZip`. Send `build/distributions/wintertodt-scouter-test-client.zip`; it includes the launcher and [testing instructions](testing/TESTING.md). This development client is separate from the normal Plugin Hub JAR.
+
 ## Configuration
 
 Open the Wintertodt Scouter sidebar. The default service is `https://wintertodt-scouter.wintertodt-scouter-service.workers.dev`. An unset, empty or whitespace-only service URL uses this default automatically. Other worlds display **Unknown** until independent scouts contribute agreeing fresh observations.

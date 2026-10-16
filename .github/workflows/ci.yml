@@ -17,13 +17,17 @@ jobs:
           distribution: temurin
           java-version: '11'
       - uses: gradle/actions/setup-gradle@v4
-      - run: chmod +x gradlew && ./gradlew --no-daemon test jar
+      - run: chmod +x gradlew && ./gradlew --no-daemon test jar testClientZip
       - uses: actions/upload-artifact@v4
         with:
           name: plugin-jar-and-tests
           path: |
             build/libs/*.jar
             build/reports/tests/test/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wintertodt-scouter-test-client
+          path: build/distributions/wintertodt-scouter-test-client.zip
   service:
     runs-on: ubuntu-latest
     steps:
