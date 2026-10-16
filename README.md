@@ -1,6 +1,6 @@
 # Wintertodt Scouter
 
-A rebuild of [Nouser/nucleon's Wintertodt Scouter](https://github.com/Nouser/wintertodt-scouter), maintained here by **bckpockets**.
+A RuneLite plugin for scouting Wintertodt worlds, based on [Nouser/nucleon's Wintertodt Scouter](https://github.com/Nouser/wintertodt-scouter), with updates by **bckpockets**.
 
 **Development preview:** the client and service are implemented, but this is not yet a Plugin Hub release. A public service, live in-game verification, and RuneLite review are release requirements. The default service URL is deliberately empty until hosting is provisioned and verified.
 
@@ -35,7 +35,7 @@ Open the Wintertodt Scouter sidebar. With no service configured, only observatio
 
 To use a deployed service, set **Scouting service URL** to its HTTPS base URL, e.g. `https://scouter.example.org`. Enable **Share observations** to contribute. Sharing is off by default. The server and its hosting provider necessarily see your IP address. Two distinct network sources must agree before a remote report appears; two clients behind the same public IP count as one.
 
-Old `wtUplink` and `wtDownlink` settings are not reused: the old API protocol and server cannot provide the guarantees of this version. The previous hopping preference is retained. No silent requests are made to an obsolete server.
+This version uses the v2 service protocol and a new service URL setting. Legacy `wtUplink` and `wtDownlink` settings are left untouched; configure a compatible service explicitly. The previous hopping preference is retained.
 
 ## Maintenance and release
 

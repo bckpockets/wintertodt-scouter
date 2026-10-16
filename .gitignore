@@ -10,3 +10,6 @@ __pycache__/
 *.db
 .venv/
 local.properties
+.npm-cache/
+node_modules/
+.wrangler/
