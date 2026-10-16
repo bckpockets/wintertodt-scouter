@@ -7,7 +7,9 @@
 - Check GitHub Actions push/PR runs and weekly compatibility runs.
 - Inspect the packaged JAR for the plugin class, icon and license resources.
 
-## Manual game QA (not yet completed)
+## Manual game QA
+
+User-confirmed on 2026-10-16 in the development client: manual world hopping, local boss energy, and the restart countdown work in the arena. The energy parser was corrected to accept the game's possessive label, with a regression test. This confirms those local flows; the broader checks below and deployed cross-world reporting still need verification.
 
 - Enable/disable/re-enable plugin; check navigation removal, no duplicate listeners or stale callbacks.
 - In Wintertodt, compare energy to the game UI across multiple ticks and health changes.

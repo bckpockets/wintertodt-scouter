@@ -2,6 +2,17 @@
 
 ## Free Cloudflare deployment
 
+Production deployment verified on 2026-10-16:
+
+- Base URL: `https://wintertodt-scouter.wintertodt-scouter-service.workers.dev`
+- Worker: `wintertodt-scouter`; private binding: `SCOUTER` → `ScouterRoom`.
+- Version: `bc3f4e6f-fb3e-471e-b1a4-fdd5b9edb023`.
+- Dashboard plan: Free (confirmed); no upgrade selected.
+- Public `/healthz`: HTTP 200, `{"status":"ok","version":2}`.
+- Public `/v2/worlds`: HTTP 200 with an empty v2 observation list before scouts contribute.
+
+The new workers.dev hostname briefly failed TLS handshakes during initial provisioning, then passed certificate-verified HTTPS checks without disabling verification. These checks establish deployment and API reachability; independent in-game reporting remains a separate release check.
+
 The initial deployment targets Cloudflare Workers Free with one SQLite-class Durable Object and a free `workers.dev` HTTPS address. The adapter is `service/worker.mjs`; configuration is `service/wrangler.jsonc`. All edge locations route to one object. Reports remain in memory; only cleanup alarms use object storage. An eviction or deployment clears reports until scouts report again.
 
 In `service/`, run:
