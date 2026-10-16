@@ -1,5 +1,7 @@
 package com.wintertodt.scouter;
 
+import com.google.gson.Gson;
+
 import java.util.Arrays;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -61,11 +63,11 @@ public class ObservationTest
             + "{\"world\":309,\"energy\":-1,\"restartSeconds\":50,\"observedAt\":1},"
             + "{\"world\":311,\"energy\":101,\"restartSeconds\":-1,\"observedAt\":100},"
             + "{\"world\":312,\"energy\":1.5,\"restartSeconds\":-1,\"observedAt\":100},null,{}]}";
-        assertEquals(1, ScoutingProtocol.decode(json, 110).size());
+        assertEquals(1, ScoutingProtocol.decode(new Gson(), json, 110).size());
     }
 
     @Test(expected = IllegalArgumentException.class) public void rejectsUnsupportedProtocol()
-    { ScoutingProtocol.decode("{\"version\":1,\"observations\":[]}", 100); }
+    { ScoutingProtocol.decode(new Gson(), "{\"version\":1,\"observations\":[]}", 100); }
 
     @Test public void normalizesServicePaths()
     {

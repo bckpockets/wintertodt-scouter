@@ -1,5 +1,7 @@
 package com.wintertodt.scouter;
 
+import com.google.gson.Gson;
+
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
@@ -25,7 +27,7 @@ public class ScoutingNetworkTest
             exchange.close();
         });
         server.start();
-        ScoutingNetwork network = new ScoutingNetwork(new OkHttpClient());
+        ScoutingNetwork network = new ScoutingNetwork(new OkHttpClient(), new Gson());
         try
         {
             HttpUrl url = HttpUrl.parse("http://127.0.0.1:" + server.getAddress().getPort() + "/v2/worlds");
@@ -56,7 +58,7 @@ public class ScoutingNetworkTest
             exchange.close();
         });
         server.start();
-        ScoutingNetwork network = new ScoutingNetwork(new OkHttpClient());
+        ScoutingNetwork network = new ScoutingNetwork(new OkHttpClient(), new Gson());
         try
         {
             CountDownLatch done = new CountDownLatch(1);

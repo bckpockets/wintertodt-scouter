@@ -1,5 +1,7 @@
 package com.wintertodt.scouter;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Collections;
@@ -20,6 +22,7 @@ final class ScoutingNetwork
 {
     private static final int MAX_RESPONSE_BYTES = 128 * 1024;
     private final OkHttpClient http;
+    private final Gson gson;
     private Call download;
     private Call upload;
     private long nextDownload;
@@ -28,8 +31,9 @@ final class ScoutingNetwork
     private int uploadFailures;
 
     @Inject
-    ScoutingNetwork(OkHttpClient http)
+    ScoutingNetwork(OkHttpClient http, Gson gson)
     {
+        this.gson = gson;
         this.http = http.newBuilder().callTimeout(10, TimeUnit.SECONDS)
             .followRedirects(false).followSslRedirects(false).build();
     }
@@ -74,7 +78,7 @@ final class ScoutingNetwork
                     { result = Result.failure("Service response too large"); }
                     else
                     {
-                        List<Observation> observations = ScoutingProtocol.decode(closed.body().string(), Instant.now().getEpochSecond());
+                        List<Observation> observations = ScoutingProtocol.decode(gson, closed.body().string(), Instant.now().getEpochSecond());
                         result = new Result(observations, "Connected", true);
                     }
                 }
@@ -99,7 +103,7 @@ final class ScoutingNetwork
     {
         if (upload != null || System.nanoTime() < nextUpload || !observation.isFresh(Instant.now().getEpochSecond())) { return; }
         Call call = http.newCall(new Request.Builder().url(url).header("User-Agent", "WintertodtScouter/2.0")
-            .post(RequestBody.create(MediaType.parse("application/json"), ScoutingProtocol.encode(observation))).build());
+            .post(RequestBody.create(MediaType.parse("application/json"), ScoutingProtocol.encode(gson, observation))).build());
         upload = call;
         call.enqueue(new Callback()
         {

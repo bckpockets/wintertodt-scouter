@@ -11,9 +11,9 @@ final class ScoutingProtocol
 {
     private ScoutingProtocol() {}
 
-    static List<Observation> decode(String json, long now)
+    static List<Observation> decode(Gson gson, String json, long now)
     {
-        JsonObject root = new Gson().fromJson(json, JsonObject.class);
+        JsonObject root = gson.fromJson(json, JsonObject.class);
         if (root == null || integer(root, "version") != 2 || !root.has("observations")
             || !root.get("observations").isJsonArray())
         {
@@ -48,8 +48,8 @@ final class ScoutingProtocol
         return value.getAsBigDecimal().longValueExact();
     }
 
-    static String encode(Observation observation)
+    static String encode(Gson gson, Observation observation)
     {
-        return new Gson().toJson(observation);
+        return gson.toJson(observation);
     }
 }
