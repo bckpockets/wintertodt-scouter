@@ -33,9 +33,9 @@ For the Cloudflare adapter, run `npm ci`, `npm test`, and `npm run check:worker`
 
 ## Configuration
 
-Open the Wintertodt Scouter sidebar. The default service is `https://wintertodt-scouter.wintertodt-scouter-service.workers.dev`. Clear the service URL to use local scouting only. Other worlds display **Unknown** until independent scouts contribute agreeing fresh observations.
+Open the Wintertodt Scouter sidebar. The default service is `https://wintertodt-scouter.wintertodt-scouter-service.workers.dev`. An unset, empty or whitespace-only service URL uses this default automatically. Other worlds display **Unknown** until independent scouts contribute agreeing fresh observations.
 
-Set **Scouting service URL** to an HTTPS base URL to change services. Existing development installations with an empty saved URL must enter the default URL explicitly. Enable **Share observations** to contribute. Sharing is off by default. The server and its hosting provider necessarily see your IP address, including when retrieving reports. Two distinct network sources must agree before a remote report appears; two clients behind the same public IP count as one.
+Set **Scouting service URL** to an HTTPS base URL to override the default service. Clearing the setting restores the default, including on existing development installations. Enable **Share observations** to contribute. Sharing is off by default. The server and its hosting provider necessarily see your IP address, including when retrieving reports. Two distinct network sources must agree before a remote report appears; two clients behind the same public IP count as one.
 
 This version uses the v2 service protocol and a new service URL setting. Legacy `wtUplink` and `wtDownlink` settings are left untouched; configure a compatible service explicitly. The previous hopping preference is retained.
 

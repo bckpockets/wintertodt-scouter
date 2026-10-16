@@ -20,7 +20,7 @@ final class ScouterPanel extends PluginPanel
 {
     private final Model model = new Model();
     private final JTable table = new JTable(model);
-    private final JLabel status = new JLabel("Local scouting only");
+    private final JLabel status = new JLabel("Connecting…");
     private final JButton hop = new JButton("Hop to selected world");
     private final IntConsumer onHop;
     private volatile boolean viewing;

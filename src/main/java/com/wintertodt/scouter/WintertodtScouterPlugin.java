@@ -55,7 +55,7 @@ public class WintertodtScouterPlugin extends Plugin
     private ScouterPanel panel;
     private NavigationButton navigation;
     private HttpUrl endpoint;
-    private String connectionStatus = "Local scouting only";
+    private String connectionStatus = "Connecting…";
     private String hopStatus;
     private long hopStatusUntil;
     private boolean uploadFailed;
@@ -101,12 +101,9 @@ public class WintertodtScouterPlugin extends Plugin
         hopTarget = null;
         uploadFailed = false;
         endpoint = null;
-        connectionStatus = "Local scouting only";
-        if (!config.serviceUrl().trim().isEmpty())
-        {
-            try { endpoint = ScoutingNetwork.endpoint(config.serviceUrl()); connectionStatus = "Connecting…"; }
-            catch (IllegalArgumentException error) { connectionStatus = "Invalid HTTPS service URL"; }
-        }
+        connectionStatus = "Connecting…";
+        try { endpoint = ScoutingNetwork.endpoint(WintertodtScouterConfig.resolveServiceUrl(config.serviceUrl())); }
+        catch (IllegalArgumentException error) { connectionStatus = "Invalid HTTPS service URL"; }
         refresh();
     }
 
