@@ -6,6 +6,12 @@ import static org.junit.Assert.*;
 
 public class ObservationTest
 {
+    @Test public void acceptsTheGamesPossessiveEnergyLabel()
+    {
+        assertEquals(82, ObservationParser.parse(307, "Wintertodt's Energy: 82%", 0, 100).energy);
+        assertEquals(45, ObservationParser.parse(307, "<col=ffffff>Wintertodt’s Energy: 45%</col>", 0, 100).energy);
+    }
+
     @Test public void readsEnergyWithoutMistakingWarmthOrTimerForEnergy()
     {
         assertEquals(57, ObservationParser.parse(307, "<col=ffffff>Wintertodt Energy: 57%</col>", 0, 100).energy);

@@ -21,7 +21,7 @@ public class CaptureLifecycleTest
         int[] world = {307};
         GameState[] state = {GameState.LOGGED_IN};
         boolean[] visible = {true};
-        String[] text = {"Wintertodt Energy: 82%"};
+        String[] text = {"Wintertodt's Energy: 82%"};
         Player player = proxy(Player.class, (method, args) -> method.equals("getWorldLocation") ? new WorldPoint(1630, 3980, 0) : null);
         Widget widget = proxy(Widget.class, (method, args) -> method.equals("isHidden") ? !visible[0] : method.equals("getText") ? text[0] : null);
         Client client = proxy(Client.class, (method, args) ->
@@ -54,7 +54,7 @@ public class CaptureLifecycleTest
         state[0] = GameState.LOGGED_IN;
         plugin.onGameTick(new GameTick()); plugin.onGameTick(new GameTick());
         assertNull(store.getLocal());
-        text[0] = "Wintertodt Energy: 45%";
+        text[0] = "Wintertodt's Energy: 45%";
         plugin.onGameTick(new GameTick());
         assertEquals(309, store.getLocal().world);
         assertEquals(45, store.getLocal().energy);

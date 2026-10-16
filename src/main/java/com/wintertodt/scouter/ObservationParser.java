@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 final class ObservationParser
 {
-    private static final Pattern ENERGY = Pattern.compile("^(?:Wintertodt\\s+)?Energy:\\s*(\\d{1,3})%$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern ENERGY = Pattern.compile("^(?:Wintertodt(?:['’]s)?\\s+)?Energy:\\s*(\\d{1,3})%$", Pattern.CASE_INSENSITIVE);
 
     private ObservationParser() {}
 
