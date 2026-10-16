@@ -1,4 +1,8 @@
-# Proposed collaborator request
+# Collaborator request
+
+Posted as https://github.com/Nouser/wintertodt-scouter/issues/14 on 2026-10-16 at 22:10:56 UTC (5:10:56 PM America/Chicago).
+
+The reviewer's two-week request period reaches 2026-10-30 at 22:10:56 UTC (5:10:56 PM America/Chicago). This is an eligibility date to revisit the closed Plugin Hub PR, not a guarantee of transfer or merging. An earlier agreement from the original author may allow collaboration instead.
 
 Destination: https://github.com/Nouser/wintertodt-scouter/issues
 
