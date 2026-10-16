@@ -1,0 +1,12 @@
+.gradle/
+.gradle-user-home/
+build/
+.idea/
+*.iml
+upstream/
+reference-template/
+*.reference.txt
+__pycache__/
+*.db
+.venv/
+local.properties

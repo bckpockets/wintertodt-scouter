@@ -1,0 +1,9 @@
+{$SCOUTER_DOMAIN} {
+    request_body {
+        max_size 1KB
+    }
+    header Strict-Transport-Security "max-age=31536000"
+    reverse_proxy scouting:8080 {
+        header_up X-Real-IP {remote_host}
+    }
+}
